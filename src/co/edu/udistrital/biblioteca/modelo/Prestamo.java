@@ -10,7 +10,7 @@ public class Prestamo {
 	
 	private Date fechaFinPrestamos;
 	
-	private Usuario usuario;
+	private Persona usuario;
 	
 	private MaterialBibliografico materialBibliografico;
 
@@ -38,11 +38,11 @@ public class Prestamo {
 		this.fechaFinPrestamos = fechaFinPrestamos;
 	}
 
-	public Usuario getUsuario() {
+	public Persona getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(Persona usuario) {
 		this.usuario = usuario;
 	}
 

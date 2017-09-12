@@ -1,34 +1,22 @@
 package co.edu.udistrital.biblioteca.modelo;
 
-public class Libro extends MaterialBibliografico{
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-	public Libro(Integer codigo, String nombre, String estado) {
-		super(codigo, nombre, estado);
-	}
+@Entity
+@Table(name = "materialbibliografico")
+@DiscriminatorValue("LIBRO")
+public class Libro extends MaterialBibliografico {
 
-	private String autor;
-
-	private String editorial;
-
-	public String getAutor() {
-		return autor;
-	}
-
-	public void setAutor(String autor) {
-		this.autor = autor;
-	}
-
-	public String getEditorial() {
-		return editorial;
-	}
-
-	public void setEditorial(String editorial) {
-		this.editorial = editorial;
-	}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public String getResena() {
-		return "Autor: " + getAutor() + " Editorial: " + getEditorial();
+		return "El autor del libro es: " + getAutor().getNombreAutor();
 	}
 
 }

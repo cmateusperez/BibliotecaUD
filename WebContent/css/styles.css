@@ -1,0 +1,76 @@
+body {
+	position: relative;
+}
+
+header {
+	background-image: url(../img/biblioteca_header.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	color: #fff;
+	height: 245px;
+	text-shadow: 1px 1px 1px #000;
+	width: 100%;
+}
+
+header a {
+	color: #ffffff;
+}
+
+header a:hover {
+	color: #EA9225;
+}
+
+header .header-container h1 {
+	color: #fff;
+	padding: 5px;
+	text-shadow: 1px 1px 1px #000;
+	text-align: center;
+}
+
+header .header-container .search label {
+	display: none;
+}
+
+header .delete i:hover {
+	color: #ff0000;
+}
+
+header .header-container .search, header .header-container .text-right {
+	padding: 0 20px;
+}
+
+.red {
+	color: #ff0000;
+}
+
+section.login, section.home-view {
+	padding: 20px 20px 60px 20px;
+}
+
+section.home-view {
+	
+}
+
+footer {
+	background: #EA9225;
+	bottom: 0;
+	margin-top: 10px;
+	padding: 5px;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+}
+
+@media ( min-width :768px) {
+	header .header-container .search label {
+		display: inline;
+	}
+	header .header-container h1 {
+		padding: 40px;
+		text-align: left;
+	}
+	section.login {
+		margin: auto;
+		width: 50%;
+	}
+}

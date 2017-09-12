@@ -8,10 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import co.edu.udistrital.biblioteca.modelo.Usuario;
-import co.edu.udistrital.biblioteca.servicios.LoginServicios;
-import co.edu.udistrital.biblioteca.serviciosImpl.ILoginServicios;
+import co.edu.udistrital.biblioteca.modelo.Persona;
+import co.edu.udistrital.biblioteca.servicios.ILoginServicios;
+import co.edu.udistrital.biblioteca.serviciosImpl.LoginServicios;
+import co.edu.udistrital.biblioteca.utilidades.HibernateUtil;
 
 @WebServlet(urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
@@ -25,23 +27,27 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		HibernateUtil.openSession();
 		String nombreUsuario = request.getParameter("nombreUsuario");
 		String contrasena = request.getParameter("contrasena");
-		Usuario usuarioRegistrado = new Usuario();
-		usuarioRegistrado.setContrasena(contrasena);
+		Persona usuarioRegistrado = new Persona();
 		usuarioRegistrado.setNombreUsuario(nombreUsuario);
-		
-		ILoginServicios iLoginServicios = new LoginServicios();
+		request.setAttribute("errorString", "");
 
-		String errorUsuario = iLoginServicios.validarUsuario(nombreUsuario, contrasena);
-		if (errorUsuario != null) {
-			request.setAttribute("errorString", errorUsuario);
+		ILoginServicios iLoginServicios = new LoginServicios();
+		usuarioRegistrado = iLoginServicios.validarUsuario(nombreUsuario, contrasena);
+        HttpSession session = request.getSession(true);
+        session.setAttribute("usuarioRegistrado", usuarioRegistrado);
+		if (usuarioRegistrado == null) {
+			if (nombreUsuario != null && contrasena != null) {
+				request.setAttribute("errorString", "Usuario inválido");
+			}
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/login.jsp");
 			dispatcher.forward(request, response);
 		} else {
+			request.setAttribute("errorString", "");
 			request.setAttribute("usuario", usuarioRegistrado);
-			RequestDispatcher dispatcher = this.getServletContext()
-					.getRequestDispatcher("/WEB-INF/views/homeView.jsp");
+			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/homeView.jsp");
 			dispatcher.forward(request, response);
 
 		}

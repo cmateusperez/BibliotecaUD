@@ -1,24 +1,20 @@
 package co.edu.udistrital.biblioteca.modelo;
 
-public class Revista extends MaterialBibliografico{
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
-	private String edicion;
-	
-	public Revista(Integer codigo, String nombre, String estado) {
-		super(codigo, nombre, estado);
-	}
+@Entity
+@DiscriminatorValue("REVISTA")
+public class Revista extends MaterialBibliografico {
 
-	public String getEdicion() {
-		return edicion;
-	}
-
-	public void setEdicion(String edicion) {
-		this.edicion = edicion;
-	}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public String getResena() {
-		return "Edición: " + getEdicion();
+		return "La edición de la revista es la: " + getEdicion();
 	}
-	
+
 }

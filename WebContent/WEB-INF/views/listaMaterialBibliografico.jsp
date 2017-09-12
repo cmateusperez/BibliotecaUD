@@ -1,39 +1,74 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Lista Material</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/styles.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+	<div class="container-fluid">
+		<header>
+			<div class="header-container">
+				<h1>BIBLIOTECA UD</h1>
+				<div class="text-right">
+					<!-- User store in session with attribute: loginedUser -->
+					Hola <strong>${usuario.nombreUsuario}</strong> <i
+						class="fa fa-user" aria-hidden="true">&nbsp;</i>
+				</div>
+				<div class="search text-right">
+					<label>Buscar</label> <input type="text" name="search"> <a
+						href="#"><i class="fa fa-search" aria-hidden="true">&nbsp;</i></a>
+				</div>
+				<div class="register text-center">
+					<a href="${pageContext.request.contextPath}/registroLibro">Registro
+						Libro</a> | <a
+						href="${pageContext.request.contextPath}/registroRevista">Registro
+						Revista</a> | <a
+						href="${pageContext.request.contextPath}/listaCompletaMaterialBibliografico">Catálogo
+						Material Bibliográfico</a> | <a
+						href="${pageContext.request.contextPath}/listaMaterialBibliografico">Solicitud
+						Prestamo</a>| <a
+						href="${pageContext.request.contextPath}/multa">Multa</a>
+				</div>
+				<div class="delete text-right">
+					 <a href="eliminarBiblioteca" class="fa fa-trash fa-2x"></a>
+				</div>
+			</div>
+		</header>
 
-	<jsp:include page="_header.jsp"></jsp:include>
-	<jsp:include page="_menu.jsp"></jsp:include>
+		<section class="home-view">
+			<h3>Lista de Material Bibliografico</h3>
 
-	<h3>Lista de Material Bibliografico</h3>
-
-		<table border="1" cellpadding="5" cellspacing="1">
-			<tr>
-				<th>Codigo</th>
-				<th>Nombre</th>
-				<th>Estado</th>
-			    <th>Solicitud</th>
-			</tr>
-			<c:forEach items="${materialBibliografico}" var="material">
+			<table border="1" cellpadding="5" cellspacing="1">
 				<tr>
-					<td>${material.codigo}</td>
-					<td>${material.nombre}</td>
-					<td>${material.estado}</td>
-					<td>
-                		<a href="prestamoMaterial?codigo=${material.codigo}">Préstamo</a>
-					</td>
+					<th>Nombre</th>
+					<th>Estado</th>
+					<th>Observaciones</th>
+					<th>Solicitud</th>
 				</tr>
-			</c:forEach>
-		</table>
-
-	<jsp:include page="_footer.jsp"></jsp:include>
-
+				<c:forEach items="${materialBibliografico}" var="material">
+					<tr>
+						<td>${material.nombreMaterial}</td>
+						<td>${material.estado}</td>
+						<td>${material.observaciones}</td>
+						<td>   <c:if test="${material.estado == 'DISPONIBLE'}">
+							       <a
+									href="prestamoMaterial?codigo=${material.idMaterialBibliografico}">Préstamo</a>
+							</c:if>
+						</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</section>
+	</div>
+	<footer>@Copyright UD</footer>
+	<script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery-3.2.1.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </body>
 </html>
